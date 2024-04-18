@@ -14,7 +14,7 @@
             {{ $title }}
             &nbsp;─&nbsp;
         @endif
-        {{ config('app.name', 'Sintas') }}
+        {{ config('app.full_name') }}
     </title>
     <link rel="canonical" href="https://membasuh.com" />
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />

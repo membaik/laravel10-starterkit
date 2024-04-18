@@ -48,7 +48,7 @@ class UserDataTable extends DataTable
                     'query' => $query
                 ]);
             })
-            ->editColumn('status', function ($query) {
+            ->addColumn('status', function ($query) {
                 return view('contents.users.datatables.status', [
                     'query' => $query
                 ]);
@@ -86,7 +86,7 @@ class UserDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('user-table')
+            ->setTableId('table_user')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -137,6 +137,6 @@ class UserDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'User_' . date('YmdHis');
+        return 'User_' . date('Y_m_d_His');
     }
 }

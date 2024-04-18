@@ -19,13 +19,13 @@ $breadcrumbs = [
             <!--begin::Card header-->
             <div class="card-header border-0">
                 <div class="card-title m-0">
-                    <h3 class="fw-bold m-0">{{ ucwords(__('Edit :name', ['name' => $query->name])) }}</h3>
+                    <h3 class="fw-bold m-0">{{ __('Edit :name', ['name' => $query->name]) }}</h3>
                 </div>
             </div>
             <!--end::Card header-->
 
             <!--begin::Form-->
-            <form id="form_role" onsubmit="return false" novalidate="novalidate" class="form"
+            <form id="form" onsubmit="return false" novalidate="novalidate" class="form"
                 data-url-action="{{ route('roles.update', $query->id) }}">
                 @method('PUT')
 
@@ -33,7 +33,9 @@ $breadcrumbs = [
                 <div class="card-body border-top p-9">
                     <div class="mb-10 fv-row">
                         <!--begin::Label-->
-                        <label for="name" class="fs-6 fw-semibold form-label required">{{ __('Name') }}</label>
+                        <label for="name" class="fs-6 fw-semibold form-label required">
+                            {{ __('Name') }}
+                        </label>
                         <!--end::Label-->
                         <!--begin::Input-->
                         <input type="text" name="name" class="form-control form-control-lg form-control-solid"
@@ -43,7 +45,7 @@ $breadcrumbs = [
                     </div>
                     <div class="row">
                         @forelse ($permissions as $roleName => $permissions)
-                            <div class="mb-10 col-md-3 col-sm-6 ps-7 pe-7">
+                            <div class="mb-10 col-md-3 col-sm-6 ps-7 pe-7" card-item>
                                 <!--begin::Option-->
                                 <label
                                     class="form-check form-check-sm form-check-custom form-check-solid align-items-start cursor-pointer">
@@ -99,7 +101,7 @@ $breadcrumbs = [
                         {{ __('Back') }}
                     </a>
                     <button type="submit" class="btn btn-primary">
-                        {{ ucwords(__('Save Changes')) }}
+                        {{ __('Save Changes') }}
                     </button>
                 </div>
                 <!--end::Card footer-->
@@ -110,6 +112,19 @@ $breadcrumbs = [
     </div>
 
     <x-slot name="script">
-        @vite(['resources/js/main/roles/checkbox.js', 'resources/js/main/roles/edit.js'])
+        <script src="{{ asset('vendor/form-render/edit.js') }}"></script>
+        <script src="{{ asset('vendor/form-render/checkbox.js') }}"></script>
+
+        <script>
+            handleInitEdit(`#form`, {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: "Name is required",
+                        },
+                    },
+                },
+            });
+        </script>
     </x-slot>
 </x-main-app-layout>

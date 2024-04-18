@@ -20,7 +20,7 @@ $breadcrumbs = [
             <div class="card-header border-0">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
-                    <h3 class="fw-bold m-0">{{ ucwords(__('Profile Details')) }}</h3>
+                    <h3 class="fw-bold m-0">{{ __('Profile Details') }}</h3>
                 </div>
                 <!--end::Card title-->
 
@@ -40,7 +40,7 @@ $breadcrumbs = [
                 <div class="row mb-7">
                     <!--begin::Label-->
                     <label class="col-lg-4 fw-semibold text-muted">
-                        {{ ucwords(__('Full Name')) }}
+                        {{ __('Full Name') }}
                     </label>
                     <!--end::Label-->
                     <!--begin::Col-->

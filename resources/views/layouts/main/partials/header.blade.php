@@ -15,9 +15,9 @@
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <div class="d-lg-none">
-                <img alt="Logo" src="{{ asset('assets/images/logos/landscape-light.png') }}"
+                <img alt="Logo" src="{{ asset(config('app.landscape_light_image_url')) }}"
                     class="h-25px theme-light-show" />
-                <img alt="Logo" src="{{ asset('assets/images/logos/landscape-dark.png') }}"
+                <img alt="Logo" src="{{ asset(config('app.landscape_dark_image_url')) }}"
                     class="h-25px theme-dark-show" />
             </div>
         </div>
@@ -34,7 +34,7 @@
                     @if (isset($title))
                         {{ $title }}
                     @else
-                        {{ config('app.name', 'Sintas') }}
+                        {{ config('app.full_name') }}
                     @endif
                 </h1>
                 <!--end::Title-->

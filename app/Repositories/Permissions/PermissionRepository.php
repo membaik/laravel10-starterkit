@@ -11,7 +11,7 @@ class PermissionRepository
     protected $app;
 
     public function __construct(
-        Application $app
+        Application $app,
     ) {
         $this->app = $app;
         $this->makeModel();

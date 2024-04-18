@@ -99,7 +99,7 @@
 
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a href="{{ route('profile.index') }}" class="menu-link px-5">{{ ucwords(__('My Profile')) }}</a>
+                <a href="{{ route('profile.index') }}" class="menu-link px-5">{{ __('My Profile') }}</a>
             </div>
             <!--end::Menu item-->
 
@@ -112,7 +112,7 @@
                 data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
                 <a href="#" class="menu-link px-5">
                     <span class="menu-title position-relative">
-                        {{ ucwords(__('Language')) }}
+                        {{ __('Language') }}
                         <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
                             {{ config('languages')[app()->getLocale()]['name'] }}
                             <img class="w-15px h-15px rounded-1 ms-2"
@@ -142,11 +142,11 @@
 
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                <form id="form_logout" method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <a id="logout-button" class="menu-link px-5" href="javascript:;">
-                        {{ ucwords(__('Sign Out')) }}
+                    <a id="button_logout" class="menu-link px-5" href="javascript:;">
+                        {{ __('Sign Out') }}
                     </a>
                 </form>
             </div>

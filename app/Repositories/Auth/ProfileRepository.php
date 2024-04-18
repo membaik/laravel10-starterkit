@@ -10,7 +10,7 @@ class ProfileRepository
     private $userId;
 
     public function __construct(
-        UserRepository $userRepository
+        UserRepository $userRepository,
     ) {
         $this->userRepository = $userRepository;
         $this->userId = auth()->user()->id;

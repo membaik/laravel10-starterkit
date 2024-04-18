@@ -25,7 +25,7 @@ $breadcrumbs = [
                             <div class="mb-10">
                                 <!--begin::Title-->
                                 <div class="fs-2hx fw-bold text-gray-800 text-center mb-13">
-                                    {{ __('Welcome') }},
+                                    {{ ucfirst(strtolower(__('Welcome'))) }},
                                     <span class="position-relative d-inline-block text-danger">
                                         <span href="javascript:;" class="text-danger opacity-75-hover">
                                             {{ auth()->user()->full_name }}

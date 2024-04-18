@@ -1,5 +1,5 @@
 <?php
-$title = __('Profile');
+$title = __('Edit :name', ['name' => __('Profile')]);
 $breadcrumbs = [
     [
         'name' => __('Profile'),
@@ -24,7 +24,7 @@ $breadcrumbs = [
             <div class="card-header border-0">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
-                    <h3 class="fw-bold m-0">{{ ucwords(__('Profile Details')) }}</h3>
+                    <h3 class="fw-bold m-0">{{ __('Profile Details') }}</h3>
                 </div>
                 <!--end::Card title-->
             </div>
@@ -103,14 +103,14 @@ $breadcrumbs = [
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <label for="full_name" class="col-lg-4 col-form-label required fw-semibold fs-6">
-                            {{ ucwords(__('Full Name')) }}
+                            {{ __('Full Name') }}
                         </label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 fv-row">
                             <input type="text" id="full_name" name="full_name"
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="{{ ucwords(__('Full Name')) }}" value="{{ auth()->user()->full_name }}"
+                                placeholder="{{ __('Full Name') }}" value="{{ auth()->user()->full_name }}"
                                 autocomplete="one-time-code" />
                         </div>
                         <!--end::Col-->
@@ -135,6 +135,108 @@ $breadcrumbs = [
     </div>
 
     <x-slot name="script">
-        @vite(['resources/js/main/profile/profile-details.js', 'resources/js/main/profile/signin-methods.js'])
+        <script>
+            FormValidation.formValidation(document.querySelector("#form_profile_details"), {
+                fields: {
+                    full_name: {
+                        validators: {
+                            notEmpty: {
+                                message: "Full name is required",
+                            },
+                        },
+                    },
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: ".fv-row",
+                        eleInvalidClass: "is-invalid",
+                        eleValidClass: "is-valid",
+                    }),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                },
+            }).on("core.form.valid", async function(e) {
+                const form = $(e.formValidation.form);
+                const actionUrl = form.data("url-action");
+                const submitButton = form.find('[type="submit"]');
+
+                submitButton.prop("disabled", true);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                await $.ajax({
+                    url: `${actionUrl}`,
+                    type: "POST",
+                    data: new FormData(form[0]),
+                    enctype: "multipart/form-data",
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: async function(res) {
+                        if (res.meta?.success) {
+                            $.confirm({
+                                theme: themeMode,
+                                title: "Success!",
+                                content: `${res.meta?.message ?? ""}`,
+                                type: "green",
+                                backgroundDismiss: true,
+                                autoClose: "close|5000",
+                                buttons: {
+                                    close: {
+                                        text: "Close",
+                                        btnClass: "btn btn-sm btn-secondary",
+                                        keys: ["enter", "esc"],
+                                        action: function() {
+                                            window.location.reload();
+                                        },
+                                    },
+                                },
+                            });
+                        } else {
+                            $.confirm({
+                                theme: themeMode,
+                                title: "Oops!",
+                                content: `${res.meta?.message ?? ""}`,
+                                type: "red",
+                                backgroundDismiss: true,
+                                buttons: {
+                                    close: {
+                                        text: "Close",
+                                        btnClass: "btn btn-sm btn-secondary",
+                                        keys: ["enter", "esc"],
+                                        action: function() {},
+                                    },
+                                },
+                            });
+                        }
+
+                        submitButton.prop("disabled", false);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        const res = jQuery.parseJSON(jqXHR.responseText);
+                        $.confirm({
+                            theme: themeMode,
+                            title: "Oops!",
+                            content: `${
+                                res.meta?.message ??
+                                "Sorry, looks like there are some errors detected, please try again."
+                            }`,
+                            type: "red",
+                            backgroundDismiss: true,
+                            buttons: {
+                                close: {
+                                    text: "Close",
+                                    btnClass: "btn btn-sm btn-secondary",
+                                    keys: ["enter", "esc"],
+                                    action: function() {},
+                                },
+                            },
+                        });
+
+                        submitButton.prop("disabled", false);
+                    },
+                });
+            });
+        </script>
     </x-slot>
 </x-main-app-layout>

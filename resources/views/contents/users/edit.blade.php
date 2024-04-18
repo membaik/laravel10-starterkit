@@ -34,7 +34,7 @@ $breadcrumbs = [
                             <div class="card-header border-0">
                                 <!--begin::Card title-->
                                 <div class="card-title m-0">
-                                    <h3 class="fw-bold m-0">{{ ucwords(__('Profile Details')) }}</h3>
+                                    <h3 class="fw-bold m-0">{{ __('Profile Details') }}</h3>
                                 </div>
                                 <!--end::Card title-->
                             </div>
@@ -51,7 +51,7 @@ $breadcrumbs = [
                                     <div class="row mb-6">
                                         <!--begin::Label-->
                                         <label class="col-lg-4 col-form-label fw-semibold fs-6">
-                                            {{ ucwords(__('Status')) }}
+                                            {{ __('Status') }}
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Col-->
@@ -62,7 +62,7 @@ $breadcrumbs = [
                                                     class="form-check-input w-50px" value="1"
                                                     {{ $query->is_active ? 'checked' : '' }} />
                                                 <label class="form-check-label cursor-pointer" for="is_active">
-                                                    Is this account active?
+                                                    {{ __('Is Active :name', ['name' => strtolower(__('Account'))]) }}
                                                 </label>
                                             </div>
                                         </div>
@@ -140,15 +140,15 @@ $breadcrumbs = [
                                         <!--begin::Label-->
                                         <label for="full_name"
                                             class="col-lg-4 col-form-label required fw-semibold fs-6">
-                                            {{ ucwords(__('Full Name')) }}
+                                            {{ __('Full Name') }}
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Col-->
-                                        <div class="col-lg-8">
+                                        <div class="col-lg-8 fv-row">
                                             <input type="text" id="full_name" name="full_name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                                placeholder="{{ ucwords(__('Full Name')) }}"
-                                                value="{{ $query->full_name }}" autocomplete="one-time-code" />
+                                                placeholder="{{ __('Full Name') }}" value="{{ $query->full_name }}"
+                                                autocomplete="one-time-code" />
                                         </div>
                                         <!--end::Col-->
                                     </div>
@@ -158,7 +158,7 @@ $breadcrumbs = [
                                 <!--begin::Card footer-->
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ ucwords(__('Save Changes')) }}
+                                        {{ __('Save Changes') }}
                                     </button>
                                 </div>
                                 <!--end::Card footer-->
@@ -173,7 +173,7 @@ $breadcrumbs = [
                                 <!--begin::Card header-->
                                 <div class="card-header border-0">
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bold m-0">{{ ucwords(__('Deactivate Account')) }}</h3>
+                                        <h3 class="fw-bold m-0">{{ __('Deactivate Account') }}</h3>
                                     </div>
                                 </div>
                                 <!--end::Card header-->
@@ -199,7 +199,7 @@ $breadcrumbs = [
                                                 <!--begin::Content-->
                                                 <div class="fw-semibold">
                                                     <h4 class="text-gray-900 fw-bold">
-                                                        {{ ucwords(__('You Are Deactivating This Account')) }}
+                                                        {{ __('You Are Deactivating This Account') }}
                                                     </h4>
                                                     <div class="fs-6 text-gray-700">
                                                         {{ __('For Extra Security') }}.
@@ -215,7 +215,7 @@ $breadcrumbs = [
                                             <input type="checkbox" id="is_deactivated" name="is_deactivated"
                                                 class="form-check-input" value="1" />
                                             <label for="is_deactivated" class="form-check-label fw-semibold ps-2 fs-6">
-                                                {{ __('I Confirm This Account Deactivation') }}
+                                                {{ ucfirst(strtolower(__('I Confirm This Account Deactivation'))) }}
                                             </label>
                                         </div>
                                         <!--end::Form input row-->
@@ -224,7 +224,7 @@ $breadcrumbs = [
                                     <!--begin::Card footer-->
                                     <div class="card-footer d-flex justify-content-end py-6 px-9">
                                         <button type="submit" class="btn btn-danger fw-semibold">
-                                            {{ ucwords(__('Deactivate Account')) }}
+                                            {{ __('Deactivate Account') }}
                                         </button>
                                     </div>
                                     <!--end::Card footer-->
@@ -244,6 +244,209 @@ $breadcrumbs = [
     </div>
 
     <x-slot name="script">
-        @vite(['resources/js/main/users/profile-details.js', 'resources/js/main/users/deactivate-account.js'])
+        <script>
+            FormValidation.formValidation(document.querySelector("#form_profile_details"), {
+                fields: {
+                    full_name: {
+                        validators: {
+                            notEmpty: {
+                                message: "Full name is required",
+                            },
+                        },
+                    },
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: ".fv-row",
+                        eleInvalidClass: "is-invalid",
+                        eleValidClass: "is-valid",
+                    }),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                },
+            }).on("core.form.valid", async function(e) {
+                const form = $(e.formValidation.form);
+                const actionUrl = form.data("url-action");
+                const submitButton = form.find('[type="submit"]');
+
+                submitButton.prop("disabled", true);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                await $.ajax({
+                    url: `${actionUrl}`,
+                    type: "POST",
+                    data: new FormData(form[0]),
+                    enctype: "multipart/form-data",
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: async function(res) {
+                        if (res.meta?.success) {
+                            $.confirm({
+                                theme: themeMode,
+                                title: "Success!",
+                                content: `${res.meta?.message ?? ""}`,
+                                type: "green",
+                                backgroundDismiss: true,
+                                autoClose: "close|5000",
+                                buttons: {
+                                    close: {
+                                        text: "Close",
+                                        btnClass: "btn btn-sm btn-secondary",
+                                        keys: ["enter", "esc"],
+                                        action: function() {
+                                            window.location.reload();
+                                        },
+                                    },
+                                },
+                            });
+                        } else {
+                            $.confirm({
+                                theme: themeMode,
+                                title: "Oops!",
+                                content: `${res.meta?.message ?? ""}`,
+                                type: "red",
+                                backgroundDismiss: true,
+                                buttons: {
+                                    close: {
+                                        text: "Close",
+                                        btnClass: "btn btn-sm btn-secondary",
+                                        keys: ["enter", "esc"],
+                                        action: function() {},
+                                    },
+                                },
+                            });
+                        }
+
+                        submitButton.prop("disabled", false);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        const res = jQuery.parseJSON(jqXHR.responseText);
+                        $.confirm({
+                            theme: themeMode,
+                            title: "Oops!",
+                            content: `${
+                                res.meta?.message ??
+                                "Sorry, looks like there are some errors detected, please try again."
+                            }`,
+                            type: "red",
+                            backgroundDismiss: true,
+                            buttons: {
+                                close: {
+                                    text: "Close",
+                                    btnClass: "btn btn-sm btn-secondary",
+                                    keys: ["enter", "esc"],
+                                    action: function() {},
+                                },
+                            },
+                        });
+
+                        submitButton.prop("disabled", false);
+                    },
+                });
+            });
+
+            FormValidation.formValidation(document.querySelector("#form_deactivate"), {
+                fields: {
+                    is_deactivated: {
+                        validators: {
+                            notEmpty: {
+                                message: "Please check the box to deactivate this account",
+                            },
+                        },
+                    },
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: ".fv-row",
+                        eleInvalidClass: "is-invalid",
+                        eleValidClass: "is-valid",
+                    }),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                },
+            }).on("core.form.valid", async function(e) {
+                const form = $(e.formValidation.form);
+                const actionUrl = form.data("url-action");
+                const submitButton = form.find('[type="submit"]');
+
+                submitButton.prop("disabled", true);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                await $.ajax({
+                    url: `${actionUrl}`,
+                    type: "POST",
+                    data: new FormData(form[0]),
+                    enctype: "multipart/form-data",
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: async function(res) {
+                        if (res.meta?.success) {
+                            $.confirm({
+                                theme: themeMode,
+                                title: "Success!",
+                                content: `${res.meta?.message ?? ""}`,
+                                type: "green",
+                                autoClose: "close|5000",
+                                buttons: {
+                                    close: {
+                                        text: "Close",
+                                        btnClass: "btn btn-sm btn-secondary",
+                                        keys: ["enter", "esc"],
+                                        action: function() {
+                                            window.location.reload();
+                                        },
+                                    },
+                                },
+                            });
+                        } else {
+                            $.confirm({
+                                theme: themeMode,
+                                title: "Oops!",
+                                content: `${res.meta?.message ?? ""}`,
+                                type: "red",
+                                backgroundDismiss: true,
+                                buttons: {
+                                    close: {
+                                        text: "Close",
+                                        btnClass: "btn btn-sm btn-secondary",
+                                        keys: ["enter", "esc"],
+                                        action: function() {},
+                                    },
+                                },
+                            });
+                        }
+
+                        submitButton.prop("disabled", false);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        const res = jQuery.parseJSON(jqXHR.responseText);
+                        $.confirm({
+                            theme: themeMode,
+                            title: "Oops!",
+                            content: `${
+                                res.meta?.message ??
+                                "Sorry, looks like there are some errors detected, please try again."
+                            }`,
+                            type: "red",
+                            backgroundDismiss: true,
+                            buttons: {
+                                close: {
+                                    text: "Close",
+                                    btnClass: "btn btn-sm btn-secondary",
+                                    keys: ["enter", "esc"],
+                                    action: function() {},
+                                },
+                            },
+                        });
+
+                        submitButton.prop("disabled", false);
+                    },
+                });
+            });
+        </script>
     </x-slot>
 </x-main-app-layout>

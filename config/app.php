@@ -20,6 +20,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | App Description
+    |--------------------------------------------------------------------------
+    */
+
+    'full_name' => env('APP_FULL_NAME', 'Sintas'),
+    'short_name' => env('APP_SHORT_NAME', 'Sintas'),
+    'favicon_url' => env('APP_FAVICON_URL', 'assets/images/logos/favicon.ico'),
+    'logo_image_url' => env('APP_LOGO_IMAGE_URL', 'assets/images/logos/logo.png'),
+    'landscape_light_image_url' => env('APP_LANDSCAPE_LIGHT_IMAGE_URL', 'assets/images/logos/landscape-light.png'),
+    'landscape_dark_image_url' => env('APP_LANDSCAPE_DARK_IMAGE_URL', 'assets/images/logos/landscape-dark.png'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |
@@ -55,7 +68,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost:1337'),
 
     'asset_url' => env('ASSET_URL'),
 

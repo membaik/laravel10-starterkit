@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -33,17 +32,7 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
     // Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    // Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
-        Route::get('', [ProfileController::class, 'index'])->name('index');
-        Route::get('edit', [ProfileController::class, 'edit'])->name('edit')->middleware('permission:auth.edit');
-        Route::patch('', [ProfileController::class, 'update'])->name('update')->middleware('permission:auth.edit');
-
-        Route::get('edit/security', [ProfileController::class, 'editSecurity'])->name('edit.security')->middleware('permission:auth.edit-email|auth.edit-password');
-        Route::put('edit/email', [ProfileController::class, 'updateEmail'])->name('update.email')->middleware('permission:auth.edit-email');
-        Route::put('edit/password', [ProfileController::class, 'updatePassword'])->name('update.password')->middleware('permission:auth.edit-password');
-    });
 });

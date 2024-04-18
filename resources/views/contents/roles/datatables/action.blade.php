@@ -10,7 +10,7 @@
         @can('role.edit')
             <div class="menu-item px-3">
                 <a href="{{ route('roles.edit', $query->id) }}" class="menu-link px-3">
-                    <i class="ki-solid ki-pencil fs-4 me-2"></i>
+                    <i class="ki-solid ki-pencil fs-4 me-2 text-warning"></i>
                     {{ __('Edit') }}
                 </a>
             </div>
@@ -18,7 +18,7 @@
         @can('role.destroy')
             <div class="menu-item px-3">
                 <a href="javascript:;" class="menu-link px-3" button-delete>
-                    <i class="ki-solid ki-trash fs-4 me-2"></i>
+                    <i class="ki-solid ki-trash fs-4 me-2 text-danger"></i>
                     {{ __('Delete') }}
                 </a>
             </div>

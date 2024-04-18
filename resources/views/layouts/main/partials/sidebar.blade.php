@@ -4,12 +4,11 @@
     <!--begin::Logo-->
     <div id="kt_app_sidebar_logo" class="app-sidebar-logo px-8">
         <!--begin::Logo image-->
-        <img alt="Logo" src="{{ asset('assets/images/logos/landscape-dark.png') }}"
+        <img alt="Logo" src="{{ asset(config('app.landscape_dark_image_url')) }}"
             class="h-30px app-sidebar-logo-default theme-light-show" />
-        <img alt="Logo" src="{{ asset('assets/images/logos/landscape-dark.png') }}"
+        <img alt="Logo" src="{{ asset(config('app.landscape_dark_image_url')) }}"
             class="h-30px app-sidebar-logo-default theme-dark-show" />
-        <img alt="Logo" src="{{ asset('assets/images/logos/logo.png') }}"
-            class="h-25px app-sidebar-logo-minimize" />
+        <img alt="Logo" src="{{ asset(config('app.logo_image_url')) }}" class="h-25px app-sidebar-logo-minimize" />
         <!--end::Logo image-->
 
         <!--begin::Sidebar toggle-->
@@ -41,7 +40,7 @@
                         'conditional' => [],
                         'menus' => [
                             [
-                                'name' => 'Dashboard',
+                                'name' => __('Dashboard'),
                                 'icon' => 'ki-element-11',
                                 'url' => route('dashboards.welcome'),
                                 'route' => 'dashboards.',

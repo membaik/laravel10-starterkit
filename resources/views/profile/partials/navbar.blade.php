@@ -3,10 +3,7 @@ $menu = [
     [
         'name' => __('Preview'),
         'icon' => '
-            <i class="ki-duotone ki-user fs-4 me-2">
-                <span class="path1"></span>
-                <span class="path2"></span>
-            </i>
+            <i class="ki-solid ki-user fs-4 me-2"></i>
         ',
         'route' => 'profile.index',
         'conditional' => [],
@@ -14,10 +11,7 @@ $menu = [
     [
         'name' => __('Edit'),
         'icon' => '
-            <i class="ki-duotone ki-setting fs-4 me-2">
-                <span class="path1"></span>
-                <span class="path2"></span>
-            </i>
+            <i class="ki-solid ki-setting fs-4 me-2"></i>
         ',
         'route' => 'profile.edit',
         'conditional' => [
@@ -29,10 +23,7 @@ $menu = [
     [
         'name' => __('Security'),
         'icon' => '
-            <i class="ki-duotone ki-setting fs-4 me-2">
-                <span class="path1"></span>
-                <span class="path2"></span>
-            </i>
+            <i class="ki-solid ki-lock-3 fs-4 me-2"></i>
         ',
         'route' => 'profile.edit.security',
         'conditional' => [

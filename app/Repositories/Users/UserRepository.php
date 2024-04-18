@@ -13,7 +13,7 @@ class UserRepository
     protected $app;
 
     public function __construct(
-        Application $app
+        Application $app,
     ) {
         $this->app = $app;
         $this->makeModel();
@@ -48,9 +48,11 @@ class UserRepository
             ');
 
         if (auth()->user()->hasRole('Main') === false) {
-            $query = $query->whereHas('roles', function ($query) {
-                return $query->where('name', '!=', 'Main');
-            });
+            $query = $query
+                ->whereDoesntHave('roles', function ($query) {
+                    return $query->where('name', 'Main');
+                })
+                ->orWhereDoesntHave('roles');
         }
 
         return $query;

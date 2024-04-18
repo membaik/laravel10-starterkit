@@ -11,10 +11,10 @@
     <title>
         @yield('title')
         &nbsp;─&nbsp;
-        {{ config('app.name', 'Sintas') }}
+        {{ config('app.full_name') }}
     </title>
     <link rel="canonical" href="https://membasuh.com" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/logos/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset(config('app.favicon_url')) }}" />
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />

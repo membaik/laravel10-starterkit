@@ -1,5 +1,5 @@
 @if ($query->email)
     {{ $query->email }}
 @else
-    <span class="text-muted fst-italic">{{ ucwords(__('None')) }}</span>
+    <span class="text-muted fst-italic">{{ __('None') }}</span>
 @endif

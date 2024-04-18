@@ -14,7 +14,7 @@ class RoleRepository
 
     public function __construct(
         Application $app,
-        PermissionRepository $permissionRepository
+        PermissionRepository $permissionRepository,
     ) {
         $this->app = $app;
         $this->makeModel();

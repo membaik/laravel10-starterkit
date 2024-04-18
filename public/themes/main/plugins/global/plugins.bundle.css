@@ -41709,7 +41709,6 @@ table.dataTable tbody tr > .dtfc-fixed-right {
     min-height: auto;
     padding: 1.5rem 1.75rem;
     text-align: center;
-    cursor: pointer;
     border: 1px dashed var(--bs-primary);
     background-color: var(--bs-primary-light);
     border-radius: 0.475rem !important;

@@ -55,11 +55,16 @@ $breadcrumbs = [
     <x-slot name="script">
         <script>
             var indexUrl = `{{ route('users.index') }}`;
-            var tableId = `user-table`;
+            var tableId = `table_user`;
         </script>
-        <script src="{{ asset('themes/main/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 
+        <script src="{{ asset('themes/main/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+        <script src="{{ asset('vendor/datatables/table-filter.js') }}"></script>
+        <script src="{{ asset('vendor/form-render/delete.js') }}"></script>
         {{ $dataTable->scripts() }}
-        @vite(['resources/js/utilities/table-filter.js', 'resources/js/utilities/delete.js'])
+
+        <script>
+            handleInitTableFilter(tableId, `[table-filter="search"]`);
+        </script>
     </x-slot>
 </x-main-app-layout>

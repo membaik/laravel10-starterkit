@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Dashboards\DashboardController;
 use App\Http\Controllers\Languages\LanguageController;
 use App\Http\Controllers\Roles\RoleController;
@@ -24,6 +25,16 @@ Route::get('', function () {
 Route::get('lang/{lang}', [LanguageController::class, 'switch'])->name('language.switch');
 
 Route::middleware(['language', 'auth', 'verified'])->group(function () {
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+        Route::get('', [ProfileController::class, 'index'])->name('index');
+        Route::get('edit', [ProfileController::class, 'edit'])->name('edit')->middleware('permission:auth.edit');
+        Route::patch('', [ProfileController::class, 'update'])->name('update')->middleware('permission:auth.edit');
+
+        Route::get('edit/security', [ProfileController::class, 'editSecurity'])->name('edit.security')->middleware('permission:auth.edit-email|auth.edit-password');
+        Route::put('edit/email', [ProfileController::class, 'updateEmail'])->name('update.email')->middleware('permission:auth.edit-email');
+        Route::put('edit/password', [ProfileController::class, 'updatePassword'])->name('update.password')->middleware('permission:auth.edit-password');
+    });
+
     Route::group(['prefix' => 'dashboards', 'as' => 'dashboards.'], function () {
         Route::get('', function () {
             return redirect()->route('dashboards.welcome');

@@ -7,6 +7,6 @@
     </ol>
 @else
     <span class="text-muted fst-italic">
-        {{ ucwords(__('None')) }}
+        {{ __('None') }}
     </span>
 @endif
