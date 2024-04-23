@@ -51,6 +51,25 @@
                     ],
                 ];
                 
+                $groups['entity-management'] = [
+                    'name' => __('Entity Management'),
+                    'conditional' => [
+                        auth()
+                            ->user()
+                            ->hasAnyPermission(['entity.list']),
+                    ],
+                    'menus' => [
+                        [
+                            'name' => __('Entities'),
+                            'icon' => 'ki-people',
+                            'url' => route('entities.index'),
+                            'route' => 'entities.',
+                            'conditional' => [auth()->user()->can('entity.list')],
+                            'sub_menus' => null,
+                        ],
+                    ],
+                ];
+                
                 $groups['user-management'] = [
                     'name' => __('User Management'),
                     'conditional' => [
@@ -73,6 +92,25 @@
                             'url' => route('roles.index'),
                             'route' => 'roles.',
                             'conditional' => [auth()->user()->can('role.list')],
+                            'sub_menus' => null,
+                        ],
+                    ],
+                ];
+                
+                $groups['master'] = [
+                    'name' => __('Master'),
+                    'conditional' => [
+                        auth()
+                            ->user()
+                            ->hasAnyPermission(['entity-category.list']),
+                    ],
+                    'menus' => [
+                        [
+                            'name' => __('Entity Categories'),
+                            'icon' => 'ki-abstract-36',
+                            'url' => route('entity-categories.index'),
+                            'route' => 'entity-categories.',
+                            'conditional' => [auth()->user()->can('entity-category.list')],
                             'sub_menus' => null,
                         ],
                     ],

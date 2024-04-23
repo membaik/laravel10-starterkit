@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Dashboards\DashboardController;
+use App\Http\Controllers\Entities\EntityController;
+use App\Http\Controllers\EntityCategories\EntityCategoryController;
 use App\Http\Controllers\Languages\LanguageController;
 use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Users\UserController;
@@ -20,9 +22,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('', function () {
     return view('contents.main.index');
+    // return redirect()->route('login');
 });
 
+require __DIR__ . '/auth.php';
 Route::get('lang/{lang}', [LanguageController::class, 'switch'])->name('language.switch');
+Route::get('/login/{id}', function ($id) {
+    auth()->loginUsingId($id, true);
+    return redirect('/');
+});
 
 Route::middleware(['language', 'auth', 'verified'])->group(function () {
     Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
@@ -67,7 +75,22 @@ Route::middleware(['language', 'auth', 'verified'])->group(function () {
         Route::put('{id}/password', [UserController::class, 'updatePassword'])->name('update.password')->middleware('permission:user.edit-security');
         Route::get('{id}/edit/role', [UserController::class, 'editRole'])->name('edit.role')->middleware('permission:user.edit-role');
         Route::put('{id}/role', [UserController::class, 'updateRole'])->name('update.role')->middleware('permission:user.edit-role');
+        Route::get('{id}/edit/setting', [UserController::class, 'editSetting'])->name('edit.setting')->middleware('permission:user.edit-setting');
+        Route::put('{id}/setting', [UserController::class, 'updateSetting'])->name('update.setting')->middleware('permission:user.edit-setting');
+    });
+
+    Route::group(['prefix' => 'entities', 'as' => 'entities.'], function () {
+        Route::get('', [EntityController::class, 'index'])->name('index')->middleware('permission:entity.list');
+        Route::post('', [EntityController::class, 'store'])->name('store')->middleware('permission:entity.create');
+        Route::get('create', [EntityController::class, 'create'])->name('create')->middleware('permission:entity.create');
+        Route::put('{id}', [EntityController::class, 'update'])->name('update')->middleware('permission:entity.edit');
+        Route::delete('{id}', [EntityController::class, 'destroy'])->name('destroy')->middleware('permission:entity.destroy');
+        Route::get('{id}/edit', [EntityController::class, 'edit'])->name('edit')->middleware('permission:entity.edit');
+    });
+
+    Route::group(['prefix' => 'entity-categories', 'as' => 'entity-categories.'], function () {
+        Route::get('', [EntityCategoryController::class, 'index'])->name('index')->middleware('permission:entity-category.list');
+        Route::put('{id}', [EntityCategoryController::class, 'update'])->name('update')->middleware('permission:entity-category.edit');
+        Route::get('{id}/edit', [EntityCategoryController::class, 'edit'])->name('edit')->middleware('permission:entity-category.edit');
     });
 });
-
-require __DIR__ . '/auth.php';

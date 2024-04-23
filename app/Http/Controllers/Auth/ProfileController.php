@@ -45,6 +45,8 @@ class ProfileController extends Controller
             $res = $this->profileRepository->update($id, $request->data());
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -82,6 +84,8 @@ class ProfileController extends Controller
                 auth()->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -112,6 +116,8 @@ class ProfileController extends Controller
                 auth()->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();

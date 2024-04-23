@@ -7,13 +7,11 @@ use App\Repositories\Users\UserRepository;
 class ProfileRepository
 {
     private $userRepository;
-    private $userId;
 
     public function __construct(
         UserRepository $userRepository,
     ) {
         $this->userRepository = $userRepository;
-        $this->userId = auth()->user()->id;
     }
 
     public function update(string $id, array $data): array
@@ -48,7 +46,7 @@ class ProfileRepository
 
     public function updateEmail(array $data): array
     {
-        $id = $this->userId;
+        $id = auth()->user()->id;
         $query = $this->find($id);
         if ($query === null) {
             return [
@@ -91,7 +89,7 @@ class ProfileRepository
 
     public function updatePassword(array $data): array
     {
-        $id = $this->userId;
+        $id = auth()->user()->id;
         $query = $this->find($id);
         if ($query === null) {
             return [

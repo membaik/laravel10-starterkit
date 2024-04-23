@@ -18,43 +18,26 @@ $breadcrumbs = [
 
 <x-main-app-layout :title="$title" :breadcrumbs="$breadcrumbs">
     <div id="kt_app_content_container" class="app-container mt-5 mt-lg-9">
-        <!--begin::Layout-->
         <div class="d-flex flex-column flex-lg-row">
-            <!--begin::Sidebar-->
             @include('contents.users.partials.sidebar')
-            <!--end::Sidebar-->
-            <!--begin::Content-->
             <div class="flex-lg-row-fluid ms-lg-15">
-                <!--begin:::Tabs-->
                 @include('contents.users.partials.navbar')
-                <!--end:::Tabs-->
-                <!--begin:::Tab content-->
                 <div class="tab-content">
-                    <!--begin:::Tab pane-->
                     <div class="tab-pane fade show active">
-                        <!--begin::Card-->
                         <div class="card mb-8 mb-xl-10">
-                            <!--begin::Card header-->
                             <div class="card-header border-0">
                                 <div class="card-title m-0">
                                     <h3 class="fw-bold m-0">{{ __('Sign-in Method') }}</h3>
                                 </div>
                             </div>
-                            <!--end::Card header-->
 
-                            <!--begin::Card body-->
                             <div class="card-body border-top p-9">
-                                <!--begin::Email Address-->
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <!--begin::Label-->
                                     <div id="div_email_show">
                                         <div class="fs-6 fw-bold mb-1">{{ __('Email Address') }}</div>
                                         <div class="fw-semibold text-gray-600">{{ $query->email }}</div>
                                     </div>
-                                    <!--end::Label-->
-                                    <!--begin::Edit-->
                                     <div id="div_email_edit" class="flex-row-fluid d-none">
-                                        <!--begin::Form-->
                                         <form id="form_email" onsubmit="return false" novalidate="novalidate"
                                             class="form"
                                             data-url-action="{{ route('users.update.email', $query->id) }}">
@@ -85,34 +68,23 @@ $breadcrumbs = [
                                                 </button>
                                             </div>
                                         </form>
-                                        <!--end::Form-->
                                     </div>
-                                    <!--end::Edit-->
-                                    <!--begin::Action-->
+
                                     <div class="ms-auto">
                                         <button id="button_email_edit_open"
                                             class="btn btn-light btn-active-light-primary">
                                             {{ __('Change Email') }}
                                         </button>
                                     </div>
-                                    <!--end::Action-->
                                 </div>
-                                <!--end::Email Address-->
 
-                                <!--begin::Separator-->
                                 <div class="separator separator-dashed my-6"></div>
-                                <!--end::Separator-->
-                                <!--begin::Password-->
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <!--begin::Label-->
                                     <div id="div_password_show">
                                         <div class="fs-6 fw-bold mb-1">{{ __('Password') }}</div>
                                         <div class="fw-semibold text-gray-600">************</div>
                                     </div>
-                                    <!--end::Label-->
-                                    <!--begin::Edit-->
                                     <div id="div_password_edit" class="flex-row-fluid d-none">
-                                        <!--begin::Form-->
                                         <form id="form_password" onsubmit="return false" novalidate="novalidate"
                                             class="form"
                                             data-url-action="{{ route('users.update.password', $query->id) }}">
@@ -145,6 +117,7 @@ $breadcrumbs = [
                                             <div class="form-text mb-5">
                                                 {{ __('Password Must Be At Least :requires', ['requires' => strtolower(__('8 Character')) . ' ' . strtolower(__('And')) . ' ' . strtolower(__('Contain Symbols'))]) }}
                                             </div>
+
                                             <div class="d-flex">
                                                 <button type="submit" class="btn btn-primary me-2 px-6">
                                                     {{ __('Update :name', ['name' => __('Password')]) }}
@@ -155,31 +128,20 @@ $breadcrumbs = [
                                                 </button>
                                             </div>
                                         </form>
-                                        <!--end::Form-->
                                     </div>
-                                    <!--end::Edit-->
-                                    <!--begin::Action-->
                                     <div class="ms-auto">
                                         <button id="button_password_edit_open"
                                             class="btn btn-light btn-active-light-primary">
                                             {{ __('Reset Password') }}
                                         </button>
                                     </div>
-                                    <!--end::Action-->
                                 </div>
-                                <!--end::Password-->
                             </div>
-                            <!--end::Card body-->
                         </div>
-                        <!--end::Card-->
                     </div>
-                    <!--end:::Tab pane-->
                 </div>
-                <!--end:::Tab content-->
             </div>
-            <!--end::Content-->
         </div>
-        <!--end::Layout-->
     </div>
 
     <x-slot name="script">

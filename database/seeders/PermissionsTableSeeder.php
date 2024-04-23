@@ -32,24 +32,33 @@ class PermissionsTableSeeder extends Seeder
                 'user.edit',
                 'user.edit-security',
                 'user.edit-role',
+                'user.edit-setting',
                 'user.destroy',
 
                 'dashboard.main',
+
+                'entity-category.list',
+                'entity-category.edit',
+
+                'entity.list',
+                'entity.create',
+                'entity.edit',
+                'entity.destroy',
             ];
 
-            $permissionIds = Permission::query()->pluck('id', 'id');
-            foreach ($data as $permissionName) {
-                $permission = Permission::query()->updateOrCreate([
-                    'name' => $permissionName
+            $itemIds = Permission::query()->pluck('id', 'id');
+            foreach ($data as $itemName) {
+                $query = Permission::query()->updateOrCreate([
+                    'name' => $itemName
                 ]);
 
-                if ($permissionIds->contains($permission->id)) {
-                    $permissionIds->forget($permission->id);
+                if ($itemIds->contains($query->id)) {
+                    $itemIds->forget($query->id);
                 }
             }
 
-            if ($permissionIds->count()) {
-                Permission::query()->whereIn('id', $permissionIds->toArray())->delete();
+            if ($itemIds->count()) {
+                Permission::query()->whereIn('id', $itemIds->toArray())->delete();
             }
 
             DB::commit();

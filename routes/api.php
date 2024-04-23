@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\EntityController;
+use App\Http\Controllers\Api\TemporaryFileController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'temporary-files', 'as' => 'temporary-files.'], function () {
+    Route::post('', [TemporaryFileController::class, 'index'])->name('index');
+});
+
+Route::group(['prefix' => 'entities', 'as' => 'entities.'], function () {
+    Route::get('', [EntityController::class, 'index'])->name('index');
 });

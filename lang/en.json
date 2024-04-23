@@ -236,5 +236,10 @@
     "Profile": "Profile",
     "Current Password": "Current Password",
     "Not Allowed": "Not Allowed",
-    "Is Active :name": "Is this :name active?"
+    "Is Active :name": "Is this :name active?",
+    "Entities": "Entities",
+    "Entity": "Entity",
+    "Entity Categories": "Entity Categories",
+    "Entity Category": "Entity Category",
+    "Setting": "Setting"
 }

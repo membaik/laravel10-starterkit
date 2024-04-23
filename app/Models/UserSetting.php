@@ -18,4 +18,9 @@ class UserSetting extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function entity(): BelongsTo
+    {
+        return $this->belongsTo(Entity::class);
+    }
 }

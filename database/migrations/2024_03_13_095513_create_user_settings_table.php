@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('user_settings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id')->nullable()->index();
+            $table->uuid('entity_id')->nullable()->index();
+
             $table->uuid('created_by')->index()->nullable();
             $table->uuid('updated_by')->index()->nullable();
             $table->timestamps();

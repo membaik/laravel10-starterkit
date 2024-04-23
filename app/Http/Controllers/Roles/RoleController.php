@@ -47,6 +47,8 @@ class RoleController extends Controller
             $res = $this->roleRepository->store($request->data());
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -95,6 +97,8 @@ class RoleController extends Controller
             $res = $this->roleRepository->update($id, $request->data());
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -121,6 +125,8 @@ class RoleController extends Controller
             $res = $this->roleRepository->destroy($id);
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();

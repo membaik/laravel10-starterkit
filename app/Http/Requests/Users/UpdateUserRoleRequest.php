@@ -23,21 +23,19 @@ class UpdateUserRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "role.*" => "nullable|string",
+            "roles.*" => "nullable|string|exists:App\Models\Role,id",
         ];
     }
 
     public function data(): array
     {
-        $company = auth()->user()->company;
-
         return [
-            'roles' => $this->getRoles($company),
+            'roles' => $this->getRoles(),
         ];
     }
 
-    public function getRoles($company = null)
+    public function getRoles()
     {
-        return $this->roleRepository->query($company)->whereIn('roles.id', $this->input('role') ?? [])->get();
+        return $this->roleRepository->query()->whereIn('roles.id', $this->input('roles') ?? [])->get();
     }
 }

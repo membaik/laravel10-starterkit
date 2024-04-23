@@ -53,6 +53,8 @@ class UserController extends Controller
             $res = $this->userRepository->store($data);
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -102,6 +104,8 @@ class UserController extends Controller
             $res = $this->userRepository->update($id, $data);
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -141,6 +145,8 @@ class UserController extends Controller
             $res = $this->userRepository->updateEmail($id, $request->data());
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -167,6 +173,8 @@ class UserController extends Controller
             $res = $this->userRepository->updatePassword($id, $request->data());
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -204,6 +212,8 @@ class UserController extends Controller
             $res = $this->userRepository->updateRole($id, $request->data());
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -239,6 +249,8 @@ class UserController extends Controller
             $res = $this->userRepository->updateSetting($id, $request->data());
             if ($res['meta']['success'] === true) {
                 DB::commit();
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -272,6 +284,8 @@ class UserController extends Controller
                     session()->invalidate();
                     session()->regenerateToken();
                 }
+            } else {
+                DB::rollback();
             }
         } catch (\Exception $e) {
             DB::rollback();

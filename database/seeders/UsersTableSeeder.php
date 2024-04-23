@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
         try {
             DB::beginTransaction();
 
-            $users = [
+            $data = [
                 [
                     'full_name' => 'Sintas Support',
                     'username' => 'support@membasuh.com',
@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
                     'image_url' => null,
                     'remember_token' => Str::random(10),
                     'is_active' => true,
-                    'roles' => Role::query()->whereIn('name', ['Main'])->get()
+                    'roles' => Role::query()->whereIn('name', ['Main', 'Superadmin'])->get()
                 ],
                 [
                     'full_name' => 'Azis Alvriyanto',
@@ -56,28 +56,28 @@ class UsersTableSeeder extends Seeder
                 ],
             ];
 
-            foreach ($users as $data) {
-                $user = User::query()
+            foreach ($data as $item) {
+                $query = User::query()
                     ->updateOrCreate([
-                        'full_name' => $data['full_name'],
-                        'username' => $data['username'],
+                        'full_name' => $item['full_name'],
+                        'username' => $item['username'],
                     ], [
-                        'email' => $data['email'],
-                        'email_verified_at' => $data['email_verified_at'],
-                        'password' => $data['password'],
-                        'image_url' => $data['image_url'],
-                        'remember_token' => $data['remember_token'],
-                        'is_active' => $data['is_active'],
+                        'email' => $item['email'],
+                        'email_verified_at' => $item['email_verified_at'],
+                        'password' => $item['password'],
+                        'image_url' => $item['image_url'],
+                        'remember_token' => $item['remember_token'],
+                        'is_active' => $item['is_active'],
                         'created_by' => null,
                         'updated_by' => null,
                     ]);
 
-                if (count($data['roles'])) {
-                    $user->syncRoles($data['roles']);
+                if (count($item['roles'])) {
+                    $query->syncRoles($item['roles']);
                 }
 
-                $user->userSetting()->updateOrCreate([
-                    'user_id' => $user->id,
+                $query->userSetting()->updateOrCreate([
+                    'user_id' => $query->id,
                 ], [
                     'created_by' => null,
                     'updated_by' => null,

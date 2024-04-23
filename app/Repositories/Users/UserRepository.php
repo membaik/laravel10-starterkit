@@ -4,6 +4,7 @@ namespace App\Repositories\Users;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use App\Models\User;
+use App\Repositories\Entities\EntityRepository;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -11,12 +12,16 @@ use Illuminate\Support\Facades\Storage;
 class UserRepository
 {
     protected $app;
+    protected $entityRepository;
 
     public function __construct(
         Application $app,
+        EntityRepository $entityRepository,
     ) {
         $this->app = $app;
         $this->makeModel();
+
+        $this->entityRepository = $entityRepository;
     }
 
     public function makeModel()
@@ -51,8 +56,7 @@ class UserRepository
             $query = $query
                 ->whereDoesntHave('roles', function ($query) {
                     return $query->where('name', 'Main');
-                })
-                ->orWhereDoesntHave('roles');
+                });
         }
 
         return $query;
@@ -84,12 +88,23 @@ class UserRepository
                 'email_verified_at' => now(),
                 'is_active' => $data['is_active'],
             ]);
-
         $query->syncRoles($data['roles']);
+
+        $res = $this->entityRepository->store([
+            'full_name' => $data['full_name'],
+            'is_active' => $data['is_active'],
+            'entity_categories' => [],
+        ]);
+        if ($res['meta']['success'] === false) {
+            return $res;
+        }
+        $entity = $res['data'];
 
         $userSetting = $query->userSetting()->updateOrCreate([
             'user_id' => $query->id,
-        ], []);
+        ], [
+            'entity_id' => $entity->id,
+        ]);
 
         return [
             'meta' => [
@@ -98,7 +113,7 @@ class UserRepository
                 'message'   => 'User created successfully',
                 'errors'    => []
             ],
-            'data' => null,
+            'data' => $query,
         ];
     }
 
@@ -221,12 +236,22 @@ class UserRepository
 
     public function updateSetting(string $id, array $data): array
     {
-        $user = $this->find($id);
-        $query = $user->userSetting()->updateOrCreate([
-            'user_id' => $user->id,
-        ], []);
+        $query = $this->find($id);
+        if ($query->userSetting) {
+            $userSetting = $query->userSetting;
+            $userSetting->entity_id = $data['entity_id'];
+            $userSetting->save();
+        } else {
+            $query->userSetting()->updateOrCreate([
+                'user_id' => $query->id,
+            ], [
+                'entity_id' => $data['entity_id'],
+            ]);
+        }
 
-        $query->save();
+        $entity = $userSetting->entity;
+        $entity->full_name = $query->full_name;
+        $entity->save();
 
         return [
             'meta' => [

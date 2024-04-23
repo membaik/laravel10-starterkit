@@ -30,7 +30,7 @@ class StoreUserRequest extends FormRequest
             'password' => 'nullable|confirmed|min:6',
             'image' => 'nullable|file|mimes:jpeg,jpg,png',
             'status' => "nullable|boolean",
-            'role.*' => "nullable|string",
+            'roles.*' => "nullable|string|exists:App\Models\Role,id",
         ];
     }
 
@@ -69,6 +69,6 @@ class StoreUserRequest extends FormRequest
 
     public function getRoles()
     {
-        return $this->roleRepository->query()->whereIn('roles.id', $this->input('role') ?? [])->get();
+        return $this->roleRepository->query()->whereIn('roles.id', $this->input('roles') ?? [])->get();
     }
 }

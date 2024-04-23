@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TemporaryFileController extends Controller
 {
@@ -18,16 +19,26 @@ class TemporaryFileController extends Controller
                 $fileName      = date('Y_m_d_His_') . $file->hashName();
             } while (Storage::disk('public')->exists($fileDirectory . '/' . $fileName));
             $fileUrl    = $file->storeAs($fileDirectory, $fileName, 'public');
-        }
 
-        return response()->json([
-            'meta' => [
-                'success'   => true,
-                'code'      => 200,
-                'message'   => 'File uploaded successfully',
-                'errors'    => []
-            ],
-            'data' => $fileUrl,
-        ]);
+            return response()->json([
+                'meta' => [
+                    'success'   => true,
+                    'code'      => 200,
+                    'message'   => 'File uploaded successfully',
+                    'errors'    => []
+                ],
+                'data' => $fileUrl,
+            ]);
+        } else {
+            return response()->json([
+                'meta' => [
+                    'success'   => false,
+                    'code'      => 500,
+                    'message'   => 'File uploaded failed',
+                    'errors'    => []
+                ],
+                'data' => null,
+            ]);
+        }
     }
 }

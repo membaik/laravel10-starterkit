@@ -236,5 +236,10 @@
     "Profile": "Profil",
     "Current Password": "Kata Sandi Saat Ini",
     "Not Allowed": "Tidak Diizinkan",
-    "Is Active :name": "Apakah :name ini aktif?"
+    "Is Active :name": "Apakah :name ini aktif?",
+    "Entities": "Entitas",
+    "Entity": "Entitas",
+    "Entity Categories": "Kategori Entitas",
+    "Entity Category": "Kategori Entitas",
+    "Setting": "Pengaturan"
 }

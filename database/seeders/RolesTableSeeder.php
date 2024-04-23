@@ -20,21 +20,10 @@ class RolesTableSeeder extends Seeder
 
             $roles = [
                 'Main' => [
-                    'auth.edit',
-                    'auth.edit-email',
-                    'auth.edit-password',
-
                     'role.list',
                     'role.create',
                     'role.edit',
                     'role.destroy',
-
-                    'user.list',
-                    'user.create',
-                    'user.edit',
-                    'user.edit-security',
-                    'user.edit-role',
-                    'user.destroy',
                 ],
                 'Superadmin' => [
                     'auth.edit',
@@ -46,9 +35,18 @@ class RolesTableSeeder extends Seeder
                     'user.edit',
                     'user.edit-security',
                     'user.edit-role',
+                    'user.edit-setting',
                     'user.destroy',
 
                     'dashboard.main',
+
+                    'entity-category.list',
+                    'entity-category.edit',
+
+                    'entity.list',
+                    'entity.create',
+                    'entity.edit',
+                    'entity.destroy',
                 ],
                 'Admin' => [
                     'auth.edit',
