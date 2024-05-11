@@ -23,7 +23,7 @@ $menu = [
     [
         'name' => __('Security'),
         'icon' => '
-            <i class="ki-solid ki-lock-3 fs-4 me-2"></i>
+            <i class="ki-solid ki-lock fs-4 me-2"></i>
         ',
         'route' => 'profile.edit.security',
         'conditional' => [

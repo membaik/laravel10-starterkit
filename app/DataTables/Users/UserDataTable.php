@@ -48,8 +48,8 @@ class UserDataTable extends DataTable
                     'query' => $query
                 ]);
             })
-            ->addColumn('status', function ($query) {
-                return view('contents.users.datatables.status', [
+            ->addColumn('is_active_to_text', function ($query) {
+                return view('contents.users.datatables.is-active', [
                     'query' => $query
                 ]);
             })
@@ -64,9 +64,9 @@ class UserDataTable extends DataTable
                 },
             ])
             ->rawColumns([
-                'status'
+                'is_active_to_text'
             ])
-            ->filterColumn('status', function ($query, $keyword) {
+            ->filterColumn('is_active', function ($query, $keyword) {
                 $sql = 'IF(users.is_active=1, "Active", "Inactive") like ?';
                 $query->whereRaw($sql, ["{$keyword}%"]);
             });
@@ -121,8 +121,9 @@ class UserDataTable extends DataTable
                 ->title(__('Settings'))
                 ->searchable(false)
                 ->orderable(false),
-            Column::make('status')
-                ->title(__('Status')),
+            Column::make('is_active_to_text')
+                ->title(__('Status'))
+                ->name('is_active'),
             Column::computed('action')
                 ->title(__('Actions'))
                 ->searchable(false)
