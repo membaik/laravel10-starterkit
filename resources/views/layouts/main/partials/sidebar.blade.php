@@ -102,7 +102,7 @@
                     'conditional' => [
                         auth()
                             ->user()
-                            ->hasAnyPermission(['entity-category.list']),
+                            ->hasAnyPermission(['entity-category.list', 'item-category.list']),
                     ],
                     'menus' => [
                         [
@@ -111,6 +111,14 @@
                             'url' => route('entity-categories.index'),
                             'route' => 'entity-categories.',
                             'conditional' => [auth()->user()->can('entity-category.list')],
+                            'sub_menus' => null,
+                        ],
+                        [
+                            'name' => __('Item Categories'),
+                            'icon' => 'ki-abstract-26',
+                            'url' => route('item-categories.index'),
+                            'route' => 'item-categories.',
+                            'conditional' => [auth()->user()->can('item-category.list')],
                             'sub_menus' => null,
                         ],
                     ],

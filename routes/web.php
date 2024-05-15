@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Dashboards\DashboardController;
 use App\Http\Controllers\Entities\EntityController;
 use App\Http\Controllers\EntityCategories\EntityCategoryController;
+use App\Http\Controllers\ItemCategories\ItemCategoryController;
 use App\Http\Controllers\Languages\LanguageController;
 use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Users\UserController;
@@ -92,5 +93,14 @@ Route::middleware(['language', 'auth', 'verified'])->group(function () {
         Route::get('', [EntityCategoryController::class, 'index'])->name('index')->middleware('permission:entity-category.list');
         Route::put('{id}', [EntityCategoryController::class, 'update'])->name('update')->middleware('permission:entity-category.edit');
         Route::get('{id}/edit', [EntityCategoryController::class, 'edit'])->name('edit')->middleware('permission:entity-category.edit');
+    });
+
+    Route::group(['prefix' => 'item-categories', 'as' => 'item-categories.'], function () {
+        Route::get('', [ItemCategoryController::class, 'index'])->name('index')->middleware('permission:item-category.list');
+        Route::post('', [ItemCategoryController::class, 'store'])->name('store')->middleware('permission:item-category.create');
+        Route::get('create', [ItemCategoryController::class, 'create'])->name('create')->middleware('permission:item-category.create');
+        Route::put('{id}', [ItemCategoryController::class, 'update'])->name('update')->middleware('permission:item-category.edit');
+        Route::delete('{id}', [ItemCategoryController::class, 'destroy'])->name('destroy')->middleware('permission:item-category.destroy');
+        Route::get('{id}/edit', [ItemCategoryController::class, 'edit'])->name('edit')->middleware('permission:item-category.edit');
     });
 });

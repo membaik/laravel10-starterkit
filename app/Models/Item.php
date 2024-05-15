@@ -6,22 +6,16 @@ use App\Traits\ActorTrait;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Entity extends Model
+class Item extends Model
 {
     use UuidTrait, ActorTrait, SoftDeletes;
 
     protected $guarded = [];
 
-    public function userSetting(): HasOne
+    public function itemCategories(): BelongsToMany
     {
-        return $this->hasOne(UserSetting::class);
-    }
-
-    public function entityCategories(): BelongsToMany
-    {
-        return $this->belongsToMany(EntityCategory::class);
+        return $this->belongsToMany(ItemCategory::class);
     }
 }
