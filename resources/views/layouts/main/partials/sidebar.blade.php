@@ -114,6 +114,14 @@
                             'sub_menus' => null,
                         ],
                         [
+                            'name' => __('Unit of Measurements'),
+                            'icon' => 'ki-more-2',
+                            'url' => route('unit-of-measurements.index'),
+                            'route' => 'unit-of-measurements.',
+                            'conditional' => [auth()->user()->can('unit-of-measurement.list')],
+                            'sub_menus' => null,
+                        ],
+                        [
                             'name' => __('Item Categories'),
                             'icon' => 'ki-abstract-26',
                             'url' => route('item-categories.index'),

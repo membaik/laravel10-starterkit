@@ -49,6 +49,11 @@ class PermissionsTableSeeder extends Seeder
                 'item-category.create',
                 'item-category.edit',
                 'item-category.destroy',
+
+                'unit-of-measurement.list',
+                'unit-of-measurement.create',
+                'unit-of-measurement.edit',
+                'unit-of-measurement.destroy',
             ];
 
             $itemIds = Permission::query()->pluck('id', 'id');

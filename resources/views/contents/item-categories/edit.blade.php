@@ -41,7 +41,6 @@ $breadcrumbs = [
                         </div>
                     </div>
 
-
                     <div class="row">
                         <div class="col-sm-12 mb-10 fv-row">
                             <label class="fs-6 fw-semibold form-label">
@@ -134,13 +133,6 @@ $breadcrumbs = [
                     validators: {
                         notEmpty: {
                             message: "Name is required",
-                        },
-                    },
-                },
-                code: {
-                    validators: {
-                        notEmpty: {
-                            message: "Code is required",
                         },
                     },
                 },

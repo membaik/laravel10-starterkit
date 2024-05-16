@@ -132,13 +132,6 @@ $breadcrumbs = [
                         },
                     },
                 },
-                code: {
-                    validators: {
-                        notEmpty: {
-                            message: "Code is required",
-                        },
-                    },
-                },
             });
         </script>
     </x-slot>

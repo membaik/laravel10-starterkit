@@ -7,6 +7,7 @@ use App\Http\Controllers\EntityCategories\EntityCategoryController;
 use App\Http\Controllers\ItemCategories\ItemCategoryController;
 use App\Http\Controllers\Languages\LanguageController;
 use App\Http\Controllers\Roles\RoleController;
+use App\Http\Controllers\UnitOfMeasurements\UnitOfMeasurementController;
 use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -102,5 +103,14 @@ Route::middleware(['language', 'auth', 'verified'])->group(function () {
         Route::put('{id}', [ItemCategoryController::class, 'update'])->name('update')->middleware('permission:item-category.edit');
         Route::delete('{id}', [ItemCategoryController::class, 'destroy'])->name('destroy')->middleware('permission:item-category.destroy');
         Route::get('{id}/edit', [ItemCategoryController::class, 'edit'])->name('edit')->middleware('permission:item-category.edit');
+    });
+
+    Route::group(['prefix' => 'unit-of-measurements', 'as' => 'unit-of-measurements.'], function () {
+        Route::get('', [UnitOfMeasurementController::class, 'index'])->name('index')->middleware('permission:unit-of-measurement.list');
+        Route::post('', [UnitOfMeasurementController::class, 'store'])->name('store')->middleware('permission:unit-of-measurement.create');
+        Route::get('create', [UnitOfMeasurementController::class, 'create'])->name('create')->middleware('permission:unit-of-measurement.create');
+        Route::put('{id}', [UnitOfMeasurementController::class, 'update'])->name('update')->middleware('permission:unit-of-measurement.edit');
+        Route::delete('{id}', [UnitOfMeasurementController::class, 'destroy'])->name('destroy')->middleware('permission:unit-of-measurement.destroy');
+        Route::get('{id}/edit', [UnitOfMeasurementController::class, 'edit'])->name('edit')->middleware('permission:unit-of-measurement.edit');
     });
 });
