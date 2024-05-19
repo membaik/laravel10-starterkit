@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Helpers;
+namespace App\Helpers;
 
-class NumberFormatRepository
+class NumberFormatHelper
 {
-    public function stringToNumber($value): float
+    public static function stringToNumber($value): float
     {
         $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::DECIMAL);
         $value = str_replace($numberFormatter->getSymbol($numberFormatter::GROUPING_SEPARATOR_SYMBOL), "", $value);

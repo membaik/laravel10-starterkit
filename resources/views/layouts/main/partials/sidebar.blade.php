@@ -51,25 +51,6 @@
                     ],
                 ];
                 
-                $groups['item-management'] = [
-                    'name' => __('Item Management'),
-                    'conditional' => [
-                        auth()
-                            ->user()
-                            ->hasAnyPermission(['item.list']),
-                    ],
-                    'menus' => [
-                        [
-                            'name' => __('Items'),
-                            'icon' => 'ki-cheque',
-                            'url' => route('items.index'),
-                            'route' => 'items.',
-                            'conditional' => [auth()->user()->can('item.list')],
-                            'sub_menus' => null,
-                        ],
-                    ],
-                ];
-                
                 $groups['entity-management'] = [
                     'name' => __('Entity Management'),
                     'conditional' => [
@@ -121,7 +102,7 @@
                     'conditional' => [
                         auth()
                             ->user()
-                            ->hasAnyPermission(['entity-category.list', 'item-category.list']),
+                            ->hasAnyPermission(['entity-category.list']),
                     ],
                     'menus' => [
                         [
@@ -130,22 +111,6 @@
                             'url' => route('entity-categories.index'),
                             'route' => 'entity-categories.',
                             'conditional' => [auth()->user()->can('entity-category.list')],
-                            'sub_menus' => null,
-                        ],
-                        [
-                            'name' => __('Unit of Measurements'),
-                            'icon' => 'ki-more-2',
-                            'url' => route('unit-of-measurements.index'),
-                            'route' => 'unit-of-measurements.',
-                            'conditional' => [auth()->user()->can('unit-of-measurement.list')],
-                            'sub_menus' => null,
-                        ],
-                        [
-                            'name' => __('Item Categories'),
-                            'icon' => 'ki-abstract-26',
-                            'url' => route('item-categories.index'),
-                            'route' => 'item-categories.',
-                            'conditional' => [auth()->user()->can('item-category.list')],
                             'sub_menus' => null,
                         ],
                     ],

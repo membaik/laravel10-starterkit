@@ -47,21 +47,6 @@ class RolesTableSeeder extends Seeder
                     'entity.create',
                     'entity.edit',
                     'entity.destroy',
-
-                    'item-category.list',
-                    'item-category.create',
-                    'item-category.edit',
-                    'item-category.destroy',
-
-                    'unit-of-measurement.list',
-                    'unit-of-measurement.create',
-                    'unit-of-measurement.edit',
-                    'unit-of-measurement.destroy',
-
-                    'item.list',
-                    'item.create',
-                    'item.edit',
-                    'item.destroy',
                 ],
                 'Admin' => [
                     'auth.edit',
