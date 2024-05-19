@@ -14,7 +14,6 @@ class ItemCategory extends Model
 
     protected $guarded = [];
 
-
     public function getThumbnailFullUrlAttribute(): string
     {
         if ($this->thumbnail_url && Storage::disk('public')->exists($this->thumbnail_url)) {

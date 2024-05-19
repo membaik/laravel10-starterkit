@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboards\DashboardController;
 use App\Http\Controllers\Entities\EntityController;
 use App\Http\Controllers\EntityCategories\EntityCategoryController;
 use App\Http\Controllers\ItemCategories\ItemCategoryController;
+use App\Http\Controllers\Items\ItemController;
 use App\Http\Controllers\Languages\LanguageController;
 use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\UnitOfMeasurements\UnitOfMeasurementController;
@@ -112,5 +113,14 @@ Route::middleware(['language', 'auth', 'verified'])->group(function () {
         Route::put('{id}', [UnitOfMeasurementController::class, 'update'])->name('update')->middleware('permission:unit-of-measurement.edit');
         Route::delete('{id}', [UnitOfMeasurementController::class, 'destroy'])->name('destroy')->middleware('permission:unit-of-measurement.destroy');
         Route::get('{id}/edit', [UnitOfMeasurementController::class, 'edit'])->name('edit')->middleware('permission:unit-of-measurement.edit');
+    });
+
+    Route::group(['prefix' => 'items', 'as' => 'items.'], function () {
+        Route::get('', [ItemController::class, 'index'])->name('index')->middleware('permission:item.list');
+        Route::post('', [ItemController::class, 'store'])->name('store')->middleware('permission:item.create');
+        Route::get('create', [ItemController::class, 'create'])->name('create')->middleware('permission:item.create');
+        Route::put('{id}', [ItemController::class, 'update'])->name('update')->middleware('permission:item.edit');
+        Route::delete('{id}', [ItemController::class, 'destroy'])->name('destroy')->middleware('permission:item.destroy');
+        Route::get('{id}/edit', [ItemController::class, 'edit'])->name('edit')->middleware('permission:item.edit');
     });
 });

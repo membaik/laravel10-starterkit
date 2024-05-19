@@ -51,6 +51,25 @@
                     ],
                 ];
                 
+                $groups['item-management'] = [
+                    'name' => __('Item Management'),
+                    'conditional' => [
+                        auth()
+                            ->user()
+                            ->hasAnyPermission(['item.list']),
+                    ],
+                    'menus' => [
+                        [
+                            'name' => __('Items'),
+                            'icon' => 'ki-cheque',
+                            'url' => route('items.index'),
+                            'route' => 'items.',
+                            'conditional' => [auth()->user()->can('item.list')],
+                            'sub_menus' => null,
+                        ],
+                    ],
+                ];
+                
                 $groups['entity-management'] = [
                     'name' => __('Entity Management'),
                     'conditional' => [

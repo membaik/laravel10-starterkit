@@ -2,9 +2,9 @@
 
 namespace App\Helpers;
 
-class FileHelper
+class FileRepository
 {
-    public static function remove($fileUrl): float
+    public function remove($fileUrl): float
     {
         if (Storage::disk('public')->exists($fileUrl)) {
             Storage::disk('public')->delete($fileUrl);
