@@ -50,7 +50,7 @@ $breadcrumbs = [
 
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                     <a href="{{ route('entity-categories.index') }}"
-                        class="btn btn-color-gray-500 btn-active-light-secondary me-2">
+                        class="btn btn-light btn-active-light-secondary me-2">
                         {{ __('Back') }}
                     </a>
                     <button type="submit" class="btn btn-primary">
