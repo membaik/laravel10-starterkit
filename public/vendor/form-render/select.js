@@ -12,6 +12,20 @@ const handleRenderEntity = (object) => {
     `;
 };
 
+const handleRenderMaster = (object) => {
+    if (!object.id) {
+        return object.text;
+    }
+
+    return `
+        <div class="rows">
+            <div class="col-sm-12">
+                ${object.data.name}
+            </div>
+        </div>
+    `;
+};
+
 const handleInitSelectEntity = (apiUrl, element) => {
     $(element).select2({
         placeholder: "Select from the list",

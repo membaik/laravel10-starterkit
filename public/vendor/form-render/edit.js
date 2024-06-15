@@ -1,4 +1,17 @@
-const handleInitEdit = (formId, formFields) => {
+const handleInitEdit = (
+    formId,
+    formFields,
+    buttons = {
+        close: {
+            text: "Close",
+            btnClass: "btn btn-sm btn-secondary",
+            keys: ["enter", "esc"],
+            action: function () {
+                $(`${formId} .is-valid`).removeClass("is-valid");
+            },
+        },
+    }
+) => {
     return FormValidation.formValidation(document.querySelector(`${formId}`), {
         fields: formFields,
         plugins: {
@@ -16,6 +29,7 @@ const handleInitEdit = (formId, formFields) => {
         const submitButton = form.find('[type="submit"]');
 
         submitButton.prop("disabled", true);
+        submitButton.attr("data-kt-indicator", "on");
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await $.ajax({
@@ -30,23 +44,16 @@ const handleInitEdit = (formId, formFields) => {
             success: async function (res) {
                 if (res.meta?.success) {
                     $.confirm({
-                        theme: themeMode,
+                        theme: KTThemeMode.getMode(),
                         title: "Success!",
                         content: `${res.meta?.message ?? ""}`,
                         type: "green",
                         autoClose: "close|5000",
-                        buttons: {
-                            close: {
-                                text: "Close",
-                                btnClass: "btn btn-sm btn-secondary",
-                                keys: ["enter", "esc"],
-                                action: function () {},
-                            },
-                        },
+                        buttons: buttons,
                     });
                 } else {
                     $.confirm({
-                        theme: themeMode,
+                        theme: KTThemeMode.getMode(),
                         title: "Oops!",
                         content: `${res.meta?.message ?? ""}`,
                         type: "red",
@@ -63,11 +70,12 @@ const handleInitEdit = (formId, formFields) => {
                 }
 
                 submitButton.prop("disabled", false);
+                submitButton.removeAttr("data-kt-indicator");
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 const res = jQuery.parseJSON(jqXHR.responseText);
                 $.confirm({
-                    theme: themeMode,
+                    theme: KTThemeMode.getMode(),
                     title: "Oops!",
                     content: `${
                         res.meta?.message ??
@@ -86,6 +94,7 @@ const handleInitEdit = (formId, formFields) => {
                 });
 
                 submitButton.prop("disabled", false);
+                submitButton.removeAttr("data-kt-indicator");
             },
         });
     });

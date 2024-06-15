@@ -351,7 +351,7 @@ $breadcrumbs = [
                             success: async function(res) {
                                 if (res.meta?.success) {
                                     $.confirm({
-                                        theme: themeMode,
+                                        theme: KTThemeMode.getMode(),
                                         title: "Success!",
                                         content: `${res.meta?.message ?? ""}`,
                                         type: "green",
@@ -375,7 +375,7 @@ $breadcrumbs = [
                                     });
                                 } else {
                                     $.confirm({
-                                        theme: themeMode,
+                                        theme: KTThemeMode.getMode(),
                                         title: "Oops!",
                                         content: `${res.meta?.message ?? ""}`,
                                         type: "red",
@@ -394,7 +394,7 @@ $breadcrumbs = [
                             error: function(jqXHR, textStatus, errorThrown) {
                                 const res = jQuery.parseJSON(jqXHR.responseText);
                                 $.confirm({
-                                    theme: themeMode,
+                                    theme: KTThemeMode.getMode(),
                                     title: "Oops!",
                                     content: `${
                                         res.meta?.message ??
@@ -418,7 +418,7 @@ $breadcrumbs = [
                         });
                     } else {
                         $.confirm({
-                            theme: themeMode,
+                            theme: KTThemeMode.getMode(),
                             title: "Oops!",
                             content: "Sorry, looks like there are some errors detected, please try again.",
                             type: "red",

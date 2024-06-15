@@ -112,7 +112,7 @@
                     processData: false,
                     success: async function(res) {
                         $.confirm({
-                            theme: themeMode,
+                            theme: KTThemeMode.getMode(),
                             title: "Success!",
                             content: `You have successfully logged in.`,
                             type: "green",
@@ -132,7 +132,7 @@
                     error: function(jqXHR, textStatus, errorThrown) {
                         const res = jQuery.parseJSON(jqXHR.responseText);
                         $.confirm({
-                            theme: themeMode,
+                            theme: KTThemeMode.getMode(),
                             title: "Oops!",
                             content: `${
                                 res.meta?.message ??

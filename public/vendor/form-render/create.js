@@ -1,4 +1,23 @@
-const handleInitCreate = (formId, formFields) => {
+const handleInitCreate = (
+    formId,
+    formFields,
+    buttons = {
+        index: {
+            text: "Back to list",
+            btnClass: "btn btn-sm btn-secondary",
+            action: function () {
+                window.location.replace($(`${formId}`).attr("data-url-action"));
+            },
+        },
+        reCreate: {
+            text: "Recreate",
+            btnClass: "btn btn-sm btn-primary",
+            action: function () {
+                window.location.reload();
+            },
+        },
+    }
+) => {
     FormValidation.formValidation(document.querySelector(`${formId}`), {
         fields: formFields,
         plugins: {
@@ -16,6 +35,7 @@ const handleInitCreate = (formId, formFields) => {
         const submitButton = form.find('[type="submit"]');
 
         submitButton.prop("disabled", true);
+        submitButton.attr("data-kt-indicator", "on");
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await $.ajax({
@@ -30,30 +50,15 @@ const handleInitCreate = (formId, formFields) => {
             success: async function (res) {
                 if (res.meta?.success) {
                     $.confirm({
-                        theme: themeMode,
+                        theme: KTThemeMode.getMode(),
                         title: "Success!",
                         content: `${res.meta?.message ?? ""}`,
                         type: "green",
-                        buttons: {
-                            index: {
-                                text: "Back to list",
-                                btnClass: "btn btn-sm btn-secondary",
-                                action: function () {
-                                    window.location.replace(`${actionUrl}`);
-                                },
-                            },
-                            reCreate: {
-                                text: "Recreate",
-                                btnClass: "btn btn-sm btn-primary",
-                                action: function () {
-                                    window.location.reload();
-                                },
-                            },
-                        },
+                        buttons: buttons,
                     });
                 } else {
                     $.confirm({
-                        theme: themeMode,
+                        theme: KTThemeMode.getMode(),
                         title: "Oops!",
                         content: `${res.meta?.message ?? ""}`,
                         type: "red",
@@ -70,11 +75,12 @@ const handleInitCreate = (formId, formFields) => {
                 }
 
                 submitButton.prop("disabled", false);
+                submitButton.removeAttr("data-kt-indicator");
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 const res = jQuery.parseJSON(jqXHR.responseText);
                 $.confirm({
-                    theme: themeMode,
+                    theme: KTThemeMode.getMode(),
                     title: "Oops!",
                     content: `${
                         res.meta?.message ??
@@ -93,6 +99,7 @@ const handleInitCreate = (formId, formFields) => {
                 });
 
                 submitButton.prop("disabled", false);
+                submitButton.removeAttr("data-kt-indicator");
             },
         });
     });

@@ -3,7 +3,7 @@ $(document).on("click", `[button-delete]`, function () {
     const url = `${indexUrl}/${thisRow.data("id")}`;
 
     $.confirm({
-        theme: themeMode,
+        theme: KTThemeMode.getMode(),
         title: "Confirm!",
         content: `Do you want to delete this list?`,
         type: "orange",
@@ -32,7 +32,7 @@ $(document).on("click", `[button-delete]`, function () {
                                 }
 
                                 $.confirm({
-                                    theme: themeMode,
+                                    theme: KTThemeMode.getMode(),
                                     title: "Success",
                                     content: `${res.meta?.message ?? ""}`,
                                     type: "green",
@@ -50,7 +50,7 @@ $(document).on("click", `[button-delete]`, function () {
                                 });
                             } else {
                                 $.confirm({
-                                    theme: themeMode,
+                                    theme: KTThemeMode.getMode(),
                                     title: "Oops!",
                                     content: `${res.meta?.message ?? ""}`,
                                     type: "red",
@@ -69,7 +69,7 @@ $(document).on("click", `[button-delete]`, function () {
                         error: function (jqXHR, textStatus, errorThrown) {
                             const res = jQuery.parseJSON(jqXHR.responseText);
                             $.confirm({
-                                theme: themeMode,
+                                theme: KTThemeMode.getMode(),
                                 title: "Oops!",
                                 content: `${
                                     res.meta?.message ??

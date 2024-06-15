@@ -87,7 +87,10 @@ $breadcrumbs = [
                         {{ __('Discard') }}
                     </button>
                     <button type="submit" class="btn btn-primary">
-                        {{ __('Save Changes') }}
+                        <span class="indicator-label">{{ __('Save Changes') }}</span>
+                        <span class="indicator-progress">Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
                     </button>
                 </div>
             </form>
@@ -135,7 +138,7 @@ $breadcrumbs = [
                     success: async function(res) {
                         if (res.meta?.success) {
                             $.confirm({
-                                theme: themeMode,
+                                theme: KTThemeMode.getMode(),
                                 title: "Success!",
                                 content: `${res.meta?.message ?? ""}`,
                                 type: "green",
@@ -154,7 +157,7 @@ $breadcrumbs = [
                             });
                         } else {
                             $.confirm({
-                                theme: themeMode,
+                                theme: KTThemeMode.getMode(),
                                 title: "Oops!",
                                 content: `${res.meta?.message ?? ""}`,
                                 type: "red",
@@ -175,7 +178,7 @@ $breadcrumbs = [
                     error: function(jqXHR, textStatus, errorThrown) {
                         const res = jQuery.parseJSON(jqXHR.responseText);
                         $.confirm({
-                            theme: themeMode,
+                            theme: KTThemeMode.getMode(),
                             title: "Oops!",
                             content: `${
                                 res.meta?.message ??

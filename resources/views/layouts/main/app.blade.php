@@ -172,7 +172,7 @@
 
         $(document).on('click', `#button_logout`, function() {
             $.confirm({
-                theme: themeMode,
+                theme: KTThemeMode.getMode(),
                 title: 'Confirm!',
                 content: `Are you sure to logout?`,
                 type: 'orange',
