@@ -105,31 +105,35 @@ class UserDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false)
                 ->width(5)
-                ->addClass('text-center'),
+                ->addClass('min-w-50px text-center'),
             Column::make('full_name_to_text')
-                ->title(ucwords(__('Full Name')))
-                ->name('full_name'),
+                ->title(__('Full Name'))
+                ->name('full_name')
+                ->addClass('min-w-250px'),
             Column::make('email_to_text')
                 ->title(__('Email'))
-                ->name('email'),
+                ->name('email')
+                ->addClass('min-w-250px text-nowrap'),
             Column::make('role_to_text')
                 ->title(__('Roles'))
                 ->searchable(false)
                 ->orderable(false)
-                ->addClass('align-top'),
+                ->addClass('min-w-150px align-top'),
             Column::make('setting_to_text')
                 ->title(__('Settings'))
                 ->searchable(false)
-                ->orderable(false),
+                ->orderable(false)
+                ->addClass('min-w-200px'),
             Column::make('is_active_to_text')
                 ->title(__('Status'))
-                ->name('is_active'),
+                ->name('is_active')
+                ->addClass('min-w-100px'),
             Column::computed('action')
                 ->title(__('Actions'))
                 ->searchable(false)
                 ->orderable(false)
                 ->width(5)
-                ->addClass('text-end'),
+                ->addClass('min-w-125px text-end'),
         ];
     }
 

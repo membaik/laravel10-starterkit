@@ -85,18 +85,20 @@ class EntityDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false)
                 ->width(5)
-                ->addClass('text-center'),
+                ->addClass('min-w-50px text-center'),
             Column::make('full_name')
-                ->title(__('Full Name')),
+                ->title(__('Full Name'))
+                ->addClass('min-w-250px'),
             Column::make('is_active_to_text')
                 ->title(__('Status'))
-                ->name('is_active'),
+                ->name('is_active')
+                ->addClass('min-w-100px'),
             Column::computed('action')
                 ->title(__('Actions'))
                 ->searchable(false)
                 ->orderable(false)
                 ->width(5)
-                ->addClass('text-end'),
+                ->addClass('min-w-125px text-end'),
         ];
     }
 

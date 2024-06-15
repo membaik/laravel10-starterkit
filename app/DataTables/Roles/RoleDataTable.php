@@ -73,15 +73,16 @@ class RoleDataTable extends DataTable
                 ->searchable(false)
                 ->orderable(false)
                 ->width(5)
-                ->addClass('text-center'),
+                ->addClass('min-w-50px text-center'),
             Column::make('name')
-                ->title(__('Name')),
+                ->title(__('Name'))
+                ->addClass('min-w-250px'),
             Column::computed('action')
                 ->title(__('Actions'))
                 ->searchable(false)
                 ->orderable(false)
                 ->width(5)
-                ->addClass('text-end'),
+                ->addClass('min-w-125px text-end'),
         ];
     }
 

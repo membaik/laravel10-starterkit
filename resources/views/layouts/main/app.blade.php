@@ -133,6 +133,32 @@
     <!--end::Scrolltop-->
 
     <!--begin::Modals-->
+    <div id="modal_image" class="modal modal-md fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header pt-4 pb-4">
+                    <h3 id="modal_image_title" class="modal-title">Image Preview</h3>
+
+                    <div class="btn btn-icon btn-sm btn-light btn-active-secondary ms-2" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex flex-center">
+                        <img id="modal_image_img" src="{{ asset('themes/main/media/misc/spinner.gif') }}"
+                            data-src="{{ asset('themes/main/media/misc/spinner.gif') }}" class="lozad rounded mw-100"
+                            alt="" data-loaded="true" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if (isset($modal))
         {{ $modal }}
     @endif
@@ -154,7 +180,7 @@
         });
 
         const handleWaitScreen = async (targetElement = `#kt_app_body`) => {
-            let blockUI = new KTBlockUI(element = document.querySelector(targetElement), {
+            let blockUI = new KTBlockUI(element = $(targetElement)[0], {
                 message: `
                     <div class="blockui-message">
                         <span class="spinner-grow text-promary me-3"></span>
@@ -168,6 +194,8 @@
             }
 
             await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            return blockUI;
         }
 
         $(document).on('click', `#button_logout`, function() {
@@ -193,6 +221,19 @@
                     },
                 }
             });
+        });
+
+        $(document).on('click', `[button-image-open]`, async function() {
+            const thisElement = $(this);
+            const source = $(this).attr('data-source') ?? '';
+
+            $('#modal_image_img').attr('src', `{{ asset('themes/main/media/misc/spinner.gif') }}`);
+            $('#modal_image').modal('show');
+
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            $('#modal_image_img').attr('src', source);
+            $('#modal_image_img').attr('data-src', source);
         });
     </script>
     <!--end::Global Javascript Bundle-->
